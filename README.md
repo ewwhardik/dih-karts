@@ -41,7 +41,7 @@
 - **Dev watermark** in the bottom bar (toggle with F8) — `Dev: ewwhardik (Dih Clients)` and the Discord link.
 - All SmashKarts Discord buttons point to the Dih Clients server.
 - **Discord Rich Presence** — "Racing in Dih Karts" with **Join Discord** and **Download Dih Karts** buttons (dependency-free IPC client, `rpc.js`).
-- **Low-latency canvas (F9)** — WebGL context created `desynchronized` on the high-performance GPU for less compositor queueing.
+- **Low-latency canvas (F9, experimental, off by default)** — WebGL context created `desynchronized` on the high-performance GPU for less compositor queueing.
 - **Fast launch** — the patched framework/wasm are cached on disk; warm launches reach engine-ready in ~3 s on the test PC (first launch also downloads the game and ad lists).
 - **Own identity** — custom icon, file properties and taskbar identity.
 - **Smaller** — trimmed Electron build (~112 MB zip), single-instance, no service worker serving stale builds.

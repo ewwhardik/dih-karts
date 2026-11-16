@@ -1,8 +1,8 @@
 // Runs in the page's main world before the game.
 try { navigator.serviceWorker.register = () => Promise.reject(new Error("sw off")); } catch {} // SW would serve the unpatched build
 window.__dihUncap = true;
-// Low-latency canvas: desynchronized (skips compositor queueing) + high-performance GPU. F9 toggles (applies on next launch).
-const LOWLAT = (() => { try { return JSON.parse(localStorage.getItem("dih.lowlat")) ?? true; } catch { return true; } })();
+// Experimental low-latency canvas (off by default): desynchronized (skips compositor queueing) + high-performance GPU. F9 toggles (applies on next launch).
+const LOWLAT = (() => { try { return JSON.parse(localStorage.getItem("dih.lowlat")) ?? false; } catch { return true; } })();
 if (LOWLAT) { const gc = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function (t, a) { if (/^webgl/.test(t)) a = { ...a, desynchronized: true, powerPreference: "high-performance" }; return gc.call(this, t, a); }; }
 const LS = (k, d) => { try { return JSON.parse(localStorage.getItem("dih." + k)) ?? d; } catch { return d; } }, SAVE = (k, v) => localStorage.setItem("dih." + k, JSON.stringify(v));
 const CAPS = [0, 240, 165, 144, 120, 60], SCALES = [1, 0.75, 0.5, 1.25];
