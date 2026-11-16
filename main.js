@@ -1,9 +1,10 @@
 const { app, BrowserWindow, protocol, net, session } = require("electron");
-const fs = require("fs"), path = require("path");
+const fs = require("fs"), path = require("path"), crypto = require("crypto");
+const rpc = require("./rpc"), VERSION = require("./package.json").version, PATCH_REV = "r3"; // bump PATCH_REV when the framework/wasm patches change
 // --- performance: lift Chromium's 60fps/vsync cap, keep the GPU busy, never throttle ---
-for (const f of ["disable-frame-rate-limit", "disable-gpu-vsync", "ignore-gpu-blocklist", "enable-gpu-rasterization", "enable-zero-copy", "disable-renderer-backgrounding", "disable-background-timer-throttling", "disable-backgrounding-occluded-windows", "enable-quic", "disable-background-networking", "no-pings"]) app.commandLine.appendSwitch(f);
+for (const f of ["disable-frame-rate-limit", "disable-gpu-vsync", "ignore-gpu-blocklist", "enable-gpu-rasterization", "enable-zero-copy", "disable-renderer-backgrounding", "disable-background-timer-throttling", "disable-backgrounding-occluded-windows", "enable-quic", "disable-background-networking", "no-pings", "disable-ipc-flooding-protection", "disable-hang-monitor"]) app.commandLine.appendSwitch(f);
 app.commandLine.appendSwitch("use-angle", "d3d11");
-app.commandLine.appendSwitch("disable-features", "CalculateNativeWinOcclusion");
+app.commandLine.appendSwitch("disable-features", "CalculateNativeWinOcclusion,IntensiveWakeUpThrottling");
 if (!app.requestSingleInstanceLock()) app.quit();
 
 // --- patch the Unity build in flight ---
@@ -42,17 +43,24 @@ function patchWasm(b) {
   return b;
 }
 
+app.setAppUserModelId("com.dihclients.dihkarts");
 app.whenReady().then(async () => {
   const ses = session.defaultSession;
+  const cacheDir = path.join(app.getPath("userData"), "patched"); fs.mkdirSync(cacheDir, { recursive: true });
   protocol.handle("https", async req => {
     const pn0 = new URL(req.url).pathname;
     if (req.url.startsWith("https://smashkarts.io/") && /\/images\/(smashkarts|favicon)\.png$/.test(pn0)) return new Response(fs.readFileSync(path.join(__dirname, "assets", "dihkarts.png")), { headers: { "content-type": "image/png", "cache-control": "no-store" } });
+    const fw = /\.framework\.js(\.br)?$/.test(pn0), wa = /\.wasm(\.br)?$/.test(pn0);
+    if (!fw && !wa) return net.fetch(req, { bypassCustomProtocolHandlers: true });
+    // The patched framework/wasm are cached on disk (file names carry the build hash), so launches skip the 50 MB download + patch.
+    const cf = path.join(cacheDir, crypto.createHash("sha1").update(PATCH_REV + req.url).digest("hex") + (fw ? ".js" : ".wasm"));
+    const type = fw ? "application/javascript" : "application/wasm", hdr = { "content-type": type, "cache-control": "public, max-age=31536000, immutable" };
+    try { return new Response(await fs.promises.readFile(cf), { headers: hdr }); } catch {}
     const res = await net.fetch(req, { bypassCustomProtocolHandlers: true });
-    const pn = new URL(req.url).pathname, fw = /\.framework\.js(\.br)?$/.test(pn), wa = /\.wasm(\.br)?$/.test(pn);
-    if (!fw && !wa) return res;
-    const h = new Headers(res.headers); ["content-length", "content-encoding"].forEach(k => h.delete(k)); h.set("cache-control", "no-store");
-    if (fw) { h.set("content-type", "application/javascript"); return new Response(patchFramework(await res.text()), { status: res.status, headers: h }); }
-    h.set("content-type", "application/wasm"); return new Response(patchWasm(Buffer.from(await res.arrayBuffer())), { status: res.status, headers: h });
+    if (!res.ok) return res;
+    const body = fw ? Buffer.from(patchFramework(await res.text())) : patchWasm(Buffer.from(await res.arrayBuffer()));
+    fs.promises.writeFile(cf, body).catch(() => {});
+    return new Response(body, { status: res.status, headers: hdr });
   });
 
   // --- networking: DoH + connection warm-up ---
@@ -68,7 +76,7 @@ app.whenReady().then(async () => {
   } catch (e) { console.log("[dih] adblock unavailable:", e.message); }
 
   const stateFile = path.join(app.getPath("userData"), "window.json"); let st = {}; try { st = JSON.parse(fs.readFileSync(stateFile, "utf8")); } catch {}
-  const w = new BrowserWindow({ width: st.width || 1280, height: st.height || 720, x: st.x, y: st.y, backgroundColor: "#0c2f6b", autoHideMenuBar: true, title: "Dih Karts", icon: path.join(__dirname, "assets", "icon.png"), webPreferences: { backgroundThrottling: false, contextIsolation: false, sandbox: false, preload: path.join(__dirname, "preload.js") } });
+  const w = new BrowserWindow({ width: st.width || 1280, height: st.height || 720, x: st.x, y: st.y, backgroundColor: "#0c2f6b", autoHideMenuBar: true, title: "Dih Karts", icon: path.join(__dirname, "assets", "icon.ico"), webPreferences: { backgroundThrottling: false, contextIsolation: false, sandbox: false, preload: path.join(__dirname, "preload.js") } });
   if (st.max) w.maximize(); if (st.full) w.setFullScreen(true);
   const save = () => { try { const b = w.getNormalBounds(); fs.writeFileSync(stateFile, JSON.stringify({ ...b, max: w.isMaximized(), full: w.isFullScreen() })); } catch {} };
   w.on("close", save);
@@ -83,5 +91,6 @@ app.whenReady().then(async () => {
     if (/^https?:\/\/([^/]*\.)?(discord\.gg|discord\.com|discordapp\.com)\//i.test(url)) url = "https://discord.gg/KkCjEdv9Jv";
     if (/^https:/.test(url)) require("electron").shell.openExternal(url); return { action: "deny" }; });
   await ses.clearStorageData({ storages: ["serviceworkers", "cachestorage"] });
+  const presence = rpc.start(VERSION); app.on("before-quit", () => presence.stop());
   w.loadURL("https://smashkarts.io/");
 });

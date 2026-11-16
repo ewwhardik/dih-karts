@@ -1,6 +1,9 @@
 // Runs in the page's main world before the game.
 try { navigator.serviceWorker.register = () => Promise.reject(new Error("sw off")); } catch {} // SW would serve the unpatched build
 window.__dihUncap = true;
+// Low-latency canvas: desynchronized (skips compositor queueing) + high-performance GPU. F9 toggles (applies on next launch).
+const LOWLAT = (() => { try { return JSON.parse(localStorage.getItem("dih.lowlat")) ?? true; } catch { return true; } })();
+if (LOWLAT) { const gc = HTMLCanvasElement.prototype.getContext; HTMLCanvasElement.prototype.getContext = function (t, a) { if (/^webgl/.test(t)) a = { ...a, desynchronized: true, powerPreference: "high-performance" }; return gc.call(this, t, a); }; }
 const LS = (k, d) => { try { return JSON.parse(localStorage.getItem("dih." + k)) ?? d; } catch { return d; } }, SAVE = (k, v) => localStorage.setItem("dih." + k, JSON.stringify(v));
 const CAPS = [0, 240, 165, 144, 120, 60], SCALES = [1, 0.75, 0.5, 1.25];
 let capI = LS("cap", 0), scaleI = LS("scale", 0), wm = LS("wm", true);
@@ -15,13 +18,14 @@ addEventListener("DOMContentLoaded", () => {
   document.head.appendChild(css);
   const DC = "https://discord.gg/KkCjEdv9Jv"; for (const a of document.querySelectorAll("a[href*=discord]")) a.href = DC; // the page's own Discord buttons
   const mc = document.getElementById("mainContainer"); if (mc) for (const ms of [300, 1500, 4000]) setTimeout(() => { mc.classList.remove("hasRightAd"); dispatchEvent(new Event("resize")); }, ms);
-  const w = document.createElement("div"); w.id = "dihWm"; w.innerHTML = "<span>DIH <b>KARTS</b> v0.2</span><span style='opacity:.55'>|</span><span>Dev: ewwhardik <i style='opacity:.7;font-style:normal'>(Dih Clients)</i></span><span style='opacity:.55'>|</span><a href='https://discord.gg/KkCjEdv9Jv' style='color:#7fd0ff;text-decoration:none;pointer-events:auto'>discord.gg/KkCjEdv9Jv</a>"; w.style.display = wm ? "flex" : "none"; document.body.appendChild(w);
+  const w = document.createElement("div"); w.id = "dihWm"; w.innerHTML = "<span>DIH <b>KARTS</b> v0.3</span><span style='opacity:.55'>|</span><span>Dev: ewwhardik <i style='opacity:.7;font-style:normal'>(Dih Clients)</i></span><span style='opacity:.55'>|</span><a href='https://discord.gg/KkCjEdv9Jv' style='color:#7fd0ff;text-decoration:none;pointer-events:auto'>discord.gg/KkCjEdv9Jv</a>"; w.style.display = wm ? "flex" : "none"; document.body.appendChild(w);
   const t = document.createElement("div"); t.id = "dihToast"; document.body.appendChild(t); let tt;
   const toast = s => { t.textContent = s; t.style.opacity = 1; clearTimeout(tt); tt = setTimeout(() => (t.style.opacity = 0), 1400); };
   addEventListener("keydown", e => {
     if (e.code === "F6") { capI = (capI + 1) % CAPS.length; window.__dihCap = CAPS[capI]; SAVE("cap", capI); toast("FPS limit: " + (CAPS[capI] || "Unlimited")); }
     else if (e.code === "F7") { scaleI = (scaleI + 1) % SCALES.length; SAVE("scale", scaleI); dispatchEvent(new Event("resize")); toast("Render scale: " + SCALES[scaleI] + "x"); }
     else if (e.code === "F8") { wm = !wm; SAVE("wm", wm); w.style.display = wm ? "flex" : "none"; toast("Watermark " + (wm ? "on" : "off")); }
+    else if (e.code === "F9") { localStorage.setItem("dih.lowlat", JSON.stringify(!LOWLAT)); toast("Low-latency mode " + (!LOWLAT ? "ON" : "OFF") + " — restart to apply"); }
     else return; e.preventDefault();
   }, true);
 });
