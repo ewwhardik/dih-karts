@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dih Karts — fast, uncapped SmashKarts.io client</title>
+<meta name="description" content="Dih Karts: uncapped FPS, real in-game FPS counter, ad blocker, custom logo and more for SmashKarts.io. By ewwhardik (Dih Clients).">
+<link rel="icon" href="assets/logo.png">
+<style>
+:root{--bg:#0b2a66;--bg2:#08204f;--card:#103a85;--line:#2a63c4;--ink:#eef5ff;--mut:#a9c3ee;--org:#ff7a2b;--blu:#37a8ff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Arial,sans-serif}
+.w{max-width:1040px;margin:0 auto;padding:0 20px}
+header{padding:56px 0 24px;text-align:center}
+header img{width:min(420px,80%);filter:drop-shadow(0 8px 24px #0006)}
+h1{font-size:clamp(28px,5vw,44px);margin:12px 0 6px}p.sub{color:var(--mut);max-width:640px;margin:0 auto 24px}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.b{display:inline-block;padding:13px 24px;border-radius:14px;font-weight:800;text-decoration:none;color:#fff;background:var(--org);border-bottom:4px solid #c4561a}
+.b.s{background:var(--blu);border-bottom-color:#1d78c4}.b.d{background:#5865f2;border-bottom-color:#3f4bc4}
+h2{font-size:28px;margin:56px 0 16px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.c{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:18px}.c h3{margin:0 0 6px;font-size:18px;color:var(--blu)}.c p{margin:0;color:var(--mut);font-size:15px}
+figure{margin:0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+figure img{width:100%;border-radius:10px;display:block}figcaption{color:var(--mut);font-size:14px;margin-top:8px}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+table{width:100%;border-collapse:collapse}td,th{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left}kbd{background:#06285e;border:1px solid var(--line);border-radius:6px;padding:1px 8px;font-weight:700}
+footer{margin:64px 0 40px;text-align:center;color:var(--mut);font-size:14px}a{color:var(--blu)}
+</style>
+</head>
+<body>
+<header class="w">
+  <img src="assets/logo.png" alt="Dih Karts logo">
+  <h1>Dih Karts</h1>
+  <p class="sub">A fast desktop client for SmashKarts.io: uncapped FPS, an FPS counter that tells the truth, no ads, and our own logo right inside the game.</p>
+  <div class="btns">
+    <a class="b" href="https://github.com/ewwhardik/dih-karts/releases/latest">Download for Windows</a>
+    <a class="b d" href="https://discord.gg/KkCjEdv9Jv">Join the Discord</a>
+    <a class="b s" href="https://github.com/ewwhardik/dih-karts">Source on GitHub</a>
+  </div>
+</header>
+
+<main class="w">
+  <h2>Proof</h2>
+  <div class="pair">
+    <figure><img src="assets/fps-before-after.png" alt="FPS counter before and after"><figcaption>In-game FPS counter — browser (60) vs Dih Karts (266), same monitor (60&nbsp;Hz), real match.</figcaption></figure>
+    <figure><img src="assets/logo-before-after.png" alt="Logo before and after"><figcaption>In-game logo — original vs Dih Karts, rendered by the game itself.</figcaption></figure>
+  </div>
+  <div class="pair" style="margin-top:14px">
+    <figure><img src="assets/menu.png" alt="Dih Karts main menu"><figcaption>Main menu: Dih Karts logo, ad panel removed, game fills the window.</figcaption></figure>
+    <figure><img src="assets/in-match.png" alt="In a match"><figcaption>In a match: real FPS in the game's own counter, watermark in the bottom bar.</figcaption></figure>
+  </div>
+
+  <h2>Features</h2>
+  <div class="g">
+    <div class="c"><h3>Uncapped FPS</h3><p>Chromium's frame limit and VSync are lifted and the renderer is never throttled. 177–266 FPS measured on a 60&nbsp;Hz screen.</p></div>
+    <div class="c"><h3>Real in-game counter</h3><p>The game clamps its counter to 60. We patch that one constant in memory, so the original-looking counter shows the real number.</p></div>
+    <div class="c"><h3>Logo inside the game</h3><p>The Dih Karts logo replaces the menu, loading and bar logos. The patch checks the game's texture signature and skips itself if it changes.</p></div>
+    <div class="c"><h3>Ad blocker</h3><p>Ghostery engine with EasyList, EasyPrivacy and Fanboy lists. The ad panel is gone and the game stretches full width.</p></div>
+    <div class="c"><h3>Networking</h3><p>DNS-over-HTTPS, QUIC, pre-warmed connections and no background pings. Faster connection setup; it cannot change server ping.</p></div>
+    <div class="c"><h3>FPS limiter &amp; render scale</h3><p>Cycle 240/165/144/120/60 FPS with F6 and 1.0/0.75/0.5/1.25× resolution with F7.</p></div>
+    <div class="c"><h3>Fullscreen &amp; memory</h3><p>F11 fullscreen. Remembers window size, position and fullscreen state.</p></div>
+    <div class="c"><h3>Light</h3><p>Trimmed Electron build — about 112&nbsp;MB zipped, portable, no installer.</p></div>
+    <div class="c"><h3>Community</h3><p>Every Discord button in the game points to the Dih Clients server.</p></div>
+  </div>
+
+  <h2>Hotkeys</h2>
+  <figure><table>
+    <tr><th>Key</th><th>Action</th></tr>
+    <tr><td><kbd>F11</kbd></td><td>Fullscreen</td></tr>
+    <tr><td><kbd>F5</kbd></td><td>Reload</td></tr>
+    <tr><td><kbd>F6</kbd></td><td>Cycle FPS limit</td></tr>
+    <tr><td><kbd>F7</kbd></td><td>Cycle render scale</td></tr>
+    <tr><td><kbd>F8</kbd></td><td>Toggle watermark</td></tr>
+    <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd></td><td>DevTools</td></tr>
+  </table></figure>
+
+  <h2>Install</h2>
+  <figure><p style="margin:6px 8px">1. Download <b>DihKarts-win-x64.zip</b> from the <a href="https://github.com/ewwhardik/dih-karts/releases/latest">latest release</a>.<br>2. Extract it anywhere and run <b>Dih Karts.exe</b>. No installation needed.</p></figure>
+</main>
+
+<footer class="w">
+  Dev: ewwhardik (Dih Clients) · <a href="https://discord.gg/KkCjEdv9Jv">discord.gg/KkCjEdv9Jv</a><br>
+  Unofficial fan-made client. Not affiliated with or endorsed by Tall Team. SmashKarts and its artwork belong to Tall Team Ltd.
+</footer>
+</body>
+</html>

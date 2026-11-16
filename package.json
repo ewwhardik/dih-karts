@@ -1,0 +1,19 @@
+{
+  "name": "dih-karts",
+  "version": "0.2.0",
+  "description": "Dih Karts - fast uncapped ad-free SmashKarts.io client by ewwhardik (Dih Clients)", "homepage": "https://ewwhardik.github.io/dih-karts/", "repository": "github:ewwhardik/dih-karts", "author": "ewwhardik (Dih Clients)",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist-win": "node tools/package.js"
+  },
+  "dependencies": {
+    "@ghostery/adblocker-electron": "^2.13.2",
+    "cross-fetch": "^4.1.0"
+  },
+  "devDependencies": {
+    "@electron/asar": "^4.3.2",
+    "@electron/packager": "^19.0.1",
+    "electron": "^38.7.2"
+  }
+}
