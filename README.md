@@ -21,8 +21,12 @@
 
 ![fps](docs/assets/fps-before-after.png)
 
-![menu](docs/assets/menu.png)
-![match](docs/assets/in-match.png)
+**Before (ads, 60 FPS cap) vs Dih Karts:**
+
+| Before | Dih Karts |
+| :---: | :---: |
+| ![before menu](docs/assets/before-menu.png) | ![after menu](docs/assets/after-menu.png) |
+| ![before match](docs/assets/before-match.png) | ![after match](docs/assets/after-match.png) |
 
 ## Features
 

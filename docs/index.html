@@ -23,6 +23,7 @@ figure{margin:0;background:var(--card);border:2px solid var(--line);border-radiu
 figure img{width:100%;border-radius:10px;display:block}figcaption{color:var(--mut);font-size:14px;margin-top:8px}
 .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
 table{width:100%;border-collapse:collapse}td,th{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left}kbd{background:#06285e;border:1px solid var(--line);border-radius:6px;padding:1px 8px;font-weight:700}
+.ct{margin:26px 0 10px;font-size:20px}.bad,.good{position:relative}.tag{position:absolute;top:20px;left:20px;z-index:2;font-weight:900;font-size:13px;letter-spacing:.08em;padding:4px 12px;border-radius:999px;color:#fff}.bad .tag{background:#d23b3b}.good .tag{background:#1fa95b}.bad{border-color:#d23b3b}.good{border-color:#1fa95b}
 footer{margin:64px 0 40px;text-align:center;color:var(--mut);font-size:14px}a{color:var(--blu)}
 </style>
 </head>
@@ -39,14 +40,13 @@ footer{margin:64px 0 40px;text-align:center;color:var(--mut);font-size:14px}a{co
 </header>
 
 <main class="w">
-  <h2>Proof</h2>
+  <h2>Before &amp; After</h2>
+  <h3 class="ct">Main menu</h3><div class="pair"><figure class="bad"><span class="tag">BEFORE</span><img src="assets/before-menu.png" alt="before"><figcaption>Stock SmashKarts: a big ad panel eats the right side, the game is squeezed, bottom logo is the original.</figcaption></figure><figure class="good"><span class="tag">DIH KARTS</span><img src="assets/after-menu.png" alt="after"><figcaption>Dih Karts: no ads, the game fills the window, new in-game logo, dev watermark and our Discord link in the bar.</figcaption></figure></div>
+  <h3 class="ct">In a match</h3><div class="pair"><figure class="bad"><span class="tag">BEFORE</span><img src="assets/before-match.png" alt="before"><figcaption>Stock: FPS counter stuck at 60, video ad and side ad on screen.</figcaption></figure><figure class="good"><span class="tag">DIH KARTS</span><img src="assets/after-match.png" alt="after"><figcaption>Dih Karts: real FPS in the game's own counter (266 here on a 60 Hz monitor), clean screen, full width.</figcaption></figure></div>
+  <h3 class="ct">The details</h3>
   <div class="pair">
-    <figure><img src="assets/fps-before-after.png" alt="FPS counter before and after"><figcaption>In-game FPS counter — browser (60) vs Dih Karts (266), same monitor (60&nbsp;Hz), real match.</figcaption></figure>
-    <figure><img src="assets/logo-before-after.png" alt="Logo before and after"><figcaption>In-game logo — original vs Dih Karts, rendered by the game itself.</figcaption></figure>
-  </div>
-  <div class="pair" style="margin-top:14px">
-    <figure><img src="assets/menu.png" alt="Dih Karts main menu"><figcaption>Main menu: Dih Karts logo, ad panel removed, game fills the window.</figcaption></figure>
-    <figure><img src="assets/in-match.png" alt="In a match"><figcaption>In a match: real FPS in the game's own counter, watermark in the bottom bar.</figcaption></figure>
+    <figure><img src="assets/fps-before-after.png" alt="FPS before and after"><figcaption>FPS counter — capped at 60 vs uncapped.</figcaption></figure>
+    <figure><img src="assets/logo-before-after.png" alt="Logo before and after"><figcaption>Logo — original vs Dih Karts, drawn by the game itself.</figcaption></figure>
   </div>
 
   <h2>Features</h2>
