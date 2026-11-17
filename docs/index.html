@@ -3,92 +3,234 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dih Karts — fast, uncapped SmashKarts.io client</title>
-<meta name="description" content="Dih Karts: uncapped FPS, real in-game FPS counter, ad blocker, custom logo and more for SmashKarts.io. By ewwhardik (Dih Clients).">
-<link rel="icon" href="assets/logo.png">
+<title>Dih Karts — the fast, ad-free SmashKarts.io client</title>
+<meta name="description" content="Dih Karts is a free desktop client for SmashKarts.io: uncapped FPS, a real in-game FPS counter, built-in ad blocker, proper fullscreen and Discord Rich Presence. By ewwhardik (Dih Clients).">
+<meta name="theme-color" content="#0b2a66">
+<link rel="icon" href="assets/icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dih Karts — the fast, ad-free SmashKarts.io client">
+<meta property="og:description" content="Uncapped FPS, real FPS counter, no ads, proper fullscreen. Free download for Windows.">
+<meta property="og:image" content="https://ewwhardik.github.io/dih-karts/assets/after-menu.png">
+<meta property="og:url" content="https://ewwhardik.github.io/dih-karts/">
+<meta name="twitter:card" content="summary_large_image">
 <style>
-:root{--bg:#0b2a66;--bg2:#08204f;--card:#103a85;--line:#2a63c4;--ink:#eef5ff;--mut:#a9c3ee;--org:#ff7a2b;--blu:#37a8ff}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);font:16px/1.6 system-ui,Segoe UI,Arial,sans-serif}
-.w{max-width:1040px;margin:0 auto;padding:0 20px}
-header{padding:56px 0 24px;text-align:center}
-header img{width:min(420px,80%);filter:drop-shadow(0 8px 24px #0006)}
-h1{font-size:clamp(28px,5vw,44px);margin:12px 0 6px}p.sub{color:var(--mut);max-width:640px;margin:0 auto 24px}
-.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.b{display:inline-block;padding:13px 24px;border-radius:14px;font-weight:800;text-decoration:none;color:#fff;background:var(--org);border-bottom:4px solid #c4561a}
-.b.s{background:var(--blu);border-bottom-color:#1d78c4}.b.d{background:#5865f2;border-bottom-color:#3f4bc4}
-h2{font-size:28px;margin:56px 0 16px}
-.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-.c{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:18px}.c h3{margin:0 0 6px;font-size:18px;color:var(--blu)}.c p{margin:0;color:var(--mut);font-size:15px}
-figure{margin:0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
-figure img{width:100%;border-radius:10px;display:block}figcaption{color:var(--mut);font-size:14px;margin-top:8px}
-.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
-table{width:100%;border-collapse:collapse}td,th{padding:8px 12px;border-bottom:1px solid var(--line);text-align:left}kbd{background:#06285e;border:1px solid var(--line);border-radius:6px;padding:1px 8px;font-weight:700}
-.ct{margin:26px 0 10px;font-size:20px}.bad,.good{position:relative}.tag{position:absolute;top:20px;left:20px;z-index:2;font-weight:900;font-size:13px;letter-spacing:.08em;padding:4px 12px;border-radius:999px;color:#fff}.bad .tag{background:#d23b3b}.good .tag{background:#1fa95b}.bad{border-color:#d23b3b}.good{border-color:#1fa95b}
-footer{margin:64px 0 40px;text-align:center;color:var(--mut);font-size:14px}a{color:var(--blu)}
+:root{--bg:#0a2358;--bg2:#071a42;--card:#0f3277;--card2:#123a87;--line:#2a63c4;--ink:#f1f6ff;--mut:#a8c2ee;--org:#ff7a2b;--org2:#c4561a;--blu:#37a8ff;--grn:#25c26e;--red:#e04a4a;--r:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#1b56c4 0,transparent 60%),linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);font:16px/1.65 system-ui,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--blu)}img{max-width:100%;display:block}
+.w{max-width:1120px;margin:0 auto;padding:0 22px}
+/* nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(7,26,66,.78);border-bottom:1px solid rgba(42,99,196,.5)}
+nav .w{display:flex;align-items:center;gap:22px;height:62px}
+nav .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.04em;color:#fff;text-decoration:none}
+nav .brand img{width:34px;height:34px;border-radius:9px}
+nav .links{display:flex;gap:18px;margin-left:auto;align-items:center}
+nav .links a{color:var(--mut);text-decoration:none;font-weight:600;font-size:15px}nav .links a:hover{color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:14px;font-weight:800;text-decoration:none;color:#fff;background:var(--org);border-bottom:4px solid var(--org2);transition:transform .12s,filter .12s;cursor:pointer;border-top:0;border-left:0;border-right:0;font-size:16px}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.btn:active{transform:translateY(1px)}
+.btn.blu{background:#2f8fe8;border-bottom-color:#1d6bb8}.btn.dc{background:#5865f2;border-bottom-color:#3b46c2}.btn.ghost{background:transparent;border:2px solid var(--line);border-bottom-width:2px;color:#fff}
+.btn.sm{padding:9px 16px;font-size:14px;border-radius:11px}
+/* hero */
+.hero{padding:64px 0 36px;text-align:center}
+.hero .logo{width:min(460px,82%);margin:0 auto;filter:drop-shadow(0 12px 30px rgba(0,0,0,.45));animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.hero h1{font-size:clamp(30px,5.4vw,54px);line-height:1.1;margin:18px 0 12px;font-weight:900}
+.hero h1 b{color:var(--org)}
+.hero p.sub{color:var(--mut);max-width:680px;margin:0 auto 26px;font-size:18px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.meta{margin-top:14px;color:var(--mut);font-size:14px}
+.meta b{color:#fff}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin:38px 0 0}
+.stat{background:rgba(15,50,119,.7);border:2px solid var(--line);border-radius:var(--r);padding:16px 10px}
+.stat .n{font-size:34px;font-weight:900;color:var(--org);line-height:1.1}.stat .t{color:var(--mut);font-size:14px}
+/* sections */
+section{padding:46px 0}
+h2{font-size:clamp(26px,3.6vw,36px);margin:0 0 6px;font-weight:900}
+.lead{color:var(--mut);margin:0 0 24px;max-width:720px}
+/* compare */
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tab{background:var(--card);border:2px solid var(--line);color:var(--mut);padding:8px 18px;border-radius:999px;font-weight:800;cursor:pointer;font-size:14px}
+.tab.on{background:var(--org);border-color:var(--org2);color:#fff}
+.cmp{position:relative;border-radius:var(--r);overflow:hidden;border:3px solid var(--line);background:#000;user-select:none;touch-action:none;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.cmp img{width:100%;aspect-ratio:1264/681;object-fit:cover}
+.cmp .after{position:absolute;inset:0;clip-path:inset(0 0 0 var(--p,50%))}
+.cmp .bar{position:absolute;top:0;bottom:0;left:var(--p,50%);width:4px;margin-left:-2px;background:#fff;box-shadow:0 0 12px #0008;pointer-events:none}
+.cmp .knob{position:absolute;top:50%;left:var(--p,50%);width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:#fff;color:#0b2a66;display:grid;place-items:center;font-weight:900;box-shadow:0 4px 14px #0007;pointer-events:none}
+.cmp .lab{position:absolute;top:14px;padding:5px 14px;border-radius:999px;font-weight:900;font-size:13px;letter-spacing:.08em;color:#fff;pointer-events:none}
+.cmp .lab.l{left:14px;background:var(--red)}.cmp .lab.r{right:14px;background:var(--grn)}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.hint{color:var(--mut);font-size:14px;margin-top:10px;text-align:center}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:22px}
+figure{margin:0;background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:12px}
+figure img{border-radius:11px;width:100%}figcaption{color:var(--mut);font-size:14px;margin-top:9px}
+/* features */
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.c{background:linear-gradient(180deg,var(--card2),var(--card));border:2px solid var(--line);border-radius:var(--r);padding:20px;transition:transform .15s,border-color .15s}
+.c:hover{transform:translateY(-3px);border-color:var(--blu)}
+.c .ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:24px;background:rgba(55,168,255,.16);border:2px solid rgba(55,168,255,.4);margin-bottom:10px}
+.c h3{margin:0 0 4px;font-size:18px}.c p{margin:0;color:var(--mut);font-size:15px}
+.tag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.08em;background:var(--org);color:#fff;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+/* how it works + install */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;counter-reset:s}
+.step{background:var(--card);border:2px solid var(--line);border-radius:var(--r);padding:20px 20px 20px 66px;position:relative}
+.step:before{counter-increment:s;content:counter(s);position:absolute;left:18px;top:18px;width:36px;height:36px;border-radius:50%;background:var(--org);display:grid;place-items:center;font-weight:900}
+.step h3{margin:0 0 4px;font-size:17px}.step p{margin:0;color:var(--mut);font-size:15px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:2px solid var(--line);border-radius:var(--r);overflow:hidden}
+td,th{padding:11px 16px;border-bottom:1px solid rgba(42,99,196,.6);text-align:left}th{color:var(--mut);font-size:13px;letter-spacing:.08em;text-transform:uppercase}tr:last-child td{border-bottom:0}
+kbd{background:#06285e;border:1px solid var(--line);border-bottom-width:3px;border-radius:8px;padding:1px 9px;font-weight:800;font-family:inherit;font-size:14px}
+details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:14px 18px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:800}details p{color:var(--mut);margin:10px 0 0}
+.dl{background:linear-gradient(135deg,#1a56c8,#0f3277);border:3px solid var(--blu);border-radius:26px;padding:34px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.dl h2{margin-bottom:8px}
+.sha{font:12px/1.4 ui-monospace,Consolas,monospace;color:var(--mut);word-break:break-all;margin-top:14px}
+footer{margin:30px 0 40px;padding-top:26px;border-top:1px solid rgba(42,99,196,.5);text-align:center;color:var(--mut);font-size:14px}
+footer .cta{margin-bottom:14px}
+@media(max-width:720px){nav .links a:not(.btn){display:none}.hero{padding-top:40px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<header class="w">
-  <img src="assets/logo.png" alt="Dih Karts logo">
-  <h1>Dih Karts</h1>
-  <p class="sub">A fast desktop client for SmashKarts.io: uncapped FPS, an FPS counter that tells the truth, no ads, and our own logo right inside the game.</p>
-  <div class="btns">
-    <a class="b" href="https://github.com/ewwhardik/dih-karts/releases/latest">Download for Windows</a>
-    <a class="b d" href="https://discord.gg/KkCjEdv9Jv">Join the Discord</a>
-    <a class="b s" href="https://github.com/ewwhardik/dih-karts">Source on GitHub</a>
+<nav><div class="w">
+  <a class="brand" href="#top"><img src="assets/icon.png" alt="">DIH KARTS</a>
+  <div class="links">
+    <a href="#compare">Before &amp; after</a><a href="#features">Features</a><a href="#hotkeys">Hotkeys</a><a href="#faq">FAQ</a>
+    <a class="btn sm dc" href="https://discord.gg/KkCjEdv9Jv">Discord</a>
+    <a class="btn sm" href="#download">Download</a>
+  </div>
+</div></nav>
+
+<header class="hero w" id="top">
+  <img class="logo" src="assets/logo.png" alt="Dih Karts logo">
+  <h1>The <b>fast, ad-free</b> way to play SmashKarts.io</h1>
+  <p class="sub">A free desktop client with uncapped FPS, a real in-game FPS counter, a built-in ad blocker and proper fullscreen. Same game, same servers, none of the clutter.</p>
+  <div class="cta">
+    <a class="btn" id="dlBtn" href="https://github.com/ewwhardik/dih-karts/releases/latest">⬇ Download for Windows</a>
+    <a class="btn dc" href="https://discord.gg/KkCjEdv9Jv">Join the Discord</a>
+    <a class="btn ghost" href="https://github.com/ewwhardik/dih-karts">Source</a>
+  </div>
+  <div class="meta">Latest: <b id="ver">v0.4.0</b> · <span id="size">112 MB</span> · Windows x64 · portable, no installer</div>
+  <div class="stats">
+    <div class="stat"><div class="n">60 → 400+</div><div class="t">FPS on a 60&nbsp;Hz monitor</div></div>
+    <div class="stat"><div class="n">0</div><div class="t">ad panels on screen</div></div>
+    <div class="stat"><div class="n">~3 s</div><div class="t">warm launch to engine ready</div></div>
+    <div class="stat"><div class="n">112 MB</div><div class="t">portable zip</div></div>
   </div>
 </header>
 
 <main class="w">
-  <h2>Before &amp; After</h2>
-  <h3 class="ct">Main menu</h3><div class="pair"><figure class="bad"><span class="tag">BEFORE</span><img src="assets/before-menu.png" alt="before"><figcaption>Stock SmashKarts: a big ad panel eats the right side, the game is squeezed, bottom logo is the original.</figcaption></figure><figure class="good"><span class="tag">DIH KARTS</span><img src="assets/after-menu.png" alt="after"><figcaption>Dih Karts: no ads, the game fills the window, new in-game logo, dev watermark and our Discord link in the bar.</figcaption></figure></div>
-  <h3 class="ct">In a match</h3><div class="pair"><figure class="bad"><span class="tag">BEFORE</span><img src="assets/before-match.png" alt="before"><figcaption>Stock: FPS counter stuck at 60, video ad and side ad on screen.</figcaption></figure><figure class="good"><span class="tag">DIH KARTS</span><img src="assets/after-match.png" alt="after"><figcaption>Dih Karts: real FPS in the game's own counter (266 here on a 60 Hz monitor), clean screen, full width.</figcaption></figure></div>
-  <h3 class="ct">The details</h3>
+<section id="compare">
+  <h2>See the difference</h2>
+  <p class="lead">Drag the handle. Left is stock SmashKarts in a browser (ad panel, FPS stuck at 60). Right is Dih Karts. Same moment, same game.</p>
+  <div class="tabs"><button class="tab on" data-k="menu">Main menu</button><button class="tab" data-k="match">In a match</button></div>
+  <div class="cmp" id="cmp" style="--p:50%">
+    <img id="imgBefore" src="assets/before-menu.png" alt="Stock SmashKarts" loading="lazy">
+    <div class="after"><img id="imgAfter" src="assets/after-menu.png" alt="Dih Karts" loading="lazy"></div>
+    <span class="lab l">STOCK</span><span class="lab r">DIH KARTS</span>
+    <div class="bar"></div><div class="knob">⇆</div>
+    <input type="range" min="0" max="100" value="50" id="slider" aria-label="Before and after comparison slider">
+  </div>
+  <p class="hint">Stock: ad panel on the right, FPS counter capped at 60 &nbsp;·&nbsp; Dih Karts: full width, real FPS, our logo.</p>
   <div class="pair">
-    <figure><img src="assets/fps-before-after.png" alt="FPS before and after"><figcaption>FPS counter — capped at 60 vs uncapped.</figcaption></figure>
-    <figure><img src="assets/fullscreen.png" alt="Fullscreen"><figcaption>Fullscreen at 1920×1080: game fills the screen, bar pinned to the bottom, Dih Clients mark bottom-right.</figcaption></figure>
-    <figure><img src="assets/logo-before-after.png" alt="Logo before and after"><figcaption>Logo — original vs Dih Karts, drawn by the game itself.</figcaption></figure>
+    <figure><img src="assets/fps-before-after.png" alt="FPS before and after" loading="lazy"><figcaption>The game's own FPS counter — capped at 60 vs the real number.</figcaption></figure>
+    <figure><img src="assets/logo-before-after.png" alt="Logo before and after" loading="lazy"><figcaption>In-game logo, replaced inside the game's own texture.</figcaption></figure>
   </div>
+</section>
 
-  <h2>Features</h2>
+<section id="features">
+  <h2>Everything in the box</h2>
+  <p class="lead">Built for people who want the game to feel fast and look clean.</p>
   <div class="g">
-    <div class="c"><h3>Uncapped FPS</h3><p>Chromium's frame limit and VSync are lifted and the renderer is never throttled. 177–266 FPS measured on a 60&nbsp;Hz screen.</p></div>
-    <div class="c"><h3>Real in-game counter</h3><p>The game clamps its counter to 60. We patch that one constant in memory, so the original-looking counter shows the real number.</p></div>
-    <div class="c"><h3>Logo inside the game</h3><p>The Dih Karts logo replaces the menu, loading and bar logos. The patch checks the game's texture signature and skips itself if it changes.</p></div>
-    <div class="c"><h3>Ad blocker</h3><p>Ghostery engine with EasyList, EasyPrivacy and Fanboy lists. The ad panel is gone and the game stretches full width.</p></div>
-    <div class="c"><h3>Networking</h3><p>DNS-over-HTTPS, QUIC, pre-warmed connections and no background pings. Faster connection setup; it cannot change server ping.</p></div>
-    <div class="c"><h3>FPS limiter &amp; render scale</h3><p>Cycle 240/165/144/120/60 FPS with F6 and 1.0/0.75/0.5/1.25× resolution with F7.</p></div>
-    <div class="c"><h3>Fullscreen &amp; memory</h3><p>F11 fullscreen. Remembers window size, position and fullscreen state.</p></div>
-    <div class="c"><h3>Discord Rich Presence</h3><p>Shows "Racing in Dih Karts" on your profile with <b>Join Discord</b> and <b>Download Dih Karts</b> buttons for your friends.</p></div>
-    <div class="c"><h3>Low-latency canvas (experimental)</h3><p>Off by default. Press F9 and restart to make the game canvas is created desynchronized and on the high-performance GPU, skipping compositor queueing for snappier input. Screen-capture tools may show it black.</p></div>
-    <div class="c"><h3>Fast launch</h3><p>The patched game build is cached on disk, so later launches skip the 50&nbsp;MB download and patching (engine ready in about 3&nbsp;s on our test PC).</p></div>
-    <div class="c"><h3>Own icon &amp; identity</h3><p>Custom app icon, file properties and taskbar identity — it's its own app, not a browser tab.</p></div>
-    <div class="c"><h3>Proper fullscreen</h3><p>F11 or the bar button fills the whole screen with the bar pinned to the bottom — no blank strip, no letterboxing.</p></div>
-    <div class="c"><h3>Our branding</h3><p>The studio mark in the menu is replaced with the Dih Clients mark, and the YouTube button opens our channel.</p></div>
-    <div class="c"><h3>Smarter resource use</h3><p>Prefers the dedicated GPU on laptops, uses fewer browser processes, and drops to 30 FPS while the window is in the background.</p></div>
-    <div class="c"><h3>Light</h3><p>Trimmed Electron build — about 112&nbsp;MB zipped, portable, no installer.</p></div>
-    <div class="c"><h3>Community</h3><p>Every Discord button in the game points to the Dih Clients server.</p></div>
+    <div class="c"><div class="ic">⚡</div><h3>Uncapped FPS</h3><p>Chromium's frame limit and VSync are lifted and the renderer is never throttled. 177–423 FPS measured on a 60&nbsp;Hz screen.</p></div>
+    <div class="c"><div class="ic">🔢</div><h3>A counter that tells the truth</h3><p>The game clamps its own counter to 60. We patch that one value in memory, so the original-looking counter shows the real number.</p></div>
+    <div class="c"><div class="ic">🛡️</div><h3>Ad blocker</h3><p>Ghostery engine with EasyList, EasyPrivacy and Fanboy lists. The ad panel is gone and the game fills the window.</p></div>
+    <div class="c"><div class="ic">🎨</div><h3>Our branding, inside the game</h3><p>The Dih Karts logo and a Dih Clients mark replace the originals in the game's own textures. Signature-checked, so it skips itself if the game changes.</p></div>
+    <div class="c"><div class="ic">🖥️</div><h3>Proper fullscreen</h3><p>F11 or the bar button fills the whole screen with the bar pinned to the bottom. No blank strip, no letterboxing.</p></div>
+    <div class="c"><div class="ic">💬</div><h3>Discord Rich Presence</h3><p>"Racing in Dih Karts" on your profile with <b>Join Discord</b> and <b>Download</b> buttons for friends.</p></div>
+    <div class="c"><div class="ic">🚀</div><h3>Fast launch</h3><p>The patched game build is cached on disk. Later launches skip the 50&nbsp;MB download and patching.</p></div>
+    <div class="c"><div class="ic">🌐</div><h3>Networking</h3><p>DNS-over-HTTPS, QUIC and pre-warmed connections. Faster connection setup; it can't change server ping.</p></div>
+    <div class="c"><div class="ic">🎚️</div><h3>FPS limiter &amp; render scale</h3><p>Cycle 240 / 165 / 144 / 120 / 60 FPS with <kbd>F6</kbd> and 1.0 / 0.75 / 0.5 / 1.25× resolution with <kbd>F7</kbd>.</p></div>
+    <div class="c"><div class="ic">🔋</div><h3>Smarter resource use</h3><p>Prefers the dedicated GPU, uses fewer browser processes and drops to 30&nbsp;FPS while the window is in the background.</p></div>
+    <div class="c"><div class="ic">🧠</div><h3>Remembers you</h3><p>Window size, position and fullscreen state are restored. Your settings are saved between launches.</p></div>
+    <div class="c"><div class="ic">⏱️</div><h3>Low-latency canvas <span class="tag">EXPERIMENTAL</span></h3><p>Off by default. <kbd>F9</kbd> + restart creates the canvas desynchronized on the high-performance GPU. Screen-capture tools may show it black.</p></div>
   </div>
+  <div class="pair" style="margin-top:22px">
+    <figure><img src="assets/fullscreen.png" alt="Fullscreen at 1080p" loading="lazy"><figcaption>Fullscreen at 1920×1080: game fills the screen, bar pinned to the bottom, Dih Clients mark bottom-right.</figcaption></figure>
+    <figure><img src="assets/after-match.png" alt="In a match" loading="lazy"><figcaption>In a match: real FPS in the game's own counter, dev watermark in the bar.</figcaption></figure>
+  </div>
+</section>
 
+<section id="download">
+  <div class="dl">
+    <h2>Get Dih Karts</h2>
+    <p class="lead" style="margin:0 auto 20px">Free. Windows x64. Extract the zip and run <b>Dih Karts.exe</b>.</p>
+    <div class="cta">
+      <a class="btn" id="dlBtn2" href="https://github.com/ewwhardik/dih-karts/releases/latest">⬇ Download <span id="ver2">v0.4.0</span></a>
+      <a class="btn dc" href="https://discord.gg/KkCjEdv9Jv">Join the Discord for support</a>
+    </div>
+    <div class="sha" id="sha">Verify the download against the SHA-256 published with each release on GitHub and in our Discord.</div>
+  </div>
+  <div class="steps" style="margin-top:22px">
+    <div class="step"><h3>Download</h3><p>Grab <b>DihKarts-win-x64.zip</b> from the button above.</p></div>
+    <div class="step"><h3>Extract</h3><p>Unzip anywhere — a folder on your desktop is fine. No installer, no admin rights.</p></div>
+    <div class="step"><h3>Play</h3><p>Run <b>Dih Karts.exe</b>. First launch downloads the game; later launches are quick.</p></div>
+  </div>
+</section>
+
+<section id="hotkeys">
   <h2>Hotkeys</h2>
-  <figure><table>
+  <p class="lead">Everything you need is one key away.</p>
+  <table>
     <tr><th>Key</th><th>Action</th></tr>
-    <tr><td><kbd>F11</kbd></td><td>Fullscreen</td></tr>
+    <tr><td><kbd>F11</kbd></td><td>Fullscreen (also the bar's fullscreen button)</td></tr>
     <tr><td><kbd>F5</kbd></td><td>Reload</td></tr>
-    <tr><td><kbd>F6</kbd></td><td>Cycle FPS limit</td></tr>
-    <tr><td><kbd>F7</kbd></td><td>Cycle render scale</td></tr>
-    <tr><td><kbd>F8</kbd></td><td>Toggle watermark</td></tr>
+    <tr><td><kbd>F6</kbd></td><td>Cycle FPS limit: Unlimited / 240 / 165 / 144 / 120 / 60</td></tr>
+    <tr><td><kbd>F7</kbd></td><td>Cycle render scale: 1.0× / 0.75× / 0.5× / 1.25×</td></tr>
+    <tr><td><kbd>F8</kbd></td><td>Toggle the watermark</td></tr>
     <tr><td><kbd>F9</kbd></td><td>Toggle experimental low-latency canvas (restart to apply)</td></tr>
     <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd></td><td>DevTools</td></tr>
-  </table></figure>
+  </table>
+</section>
 
-  <h2>Install</h2>
-  <figure><p style="margin:6px 8px">1. Download <b>DihKarts-win-x64.zip</b> from the <a href="https://github.com/ewwhardik/dih-karts/releases/latest">latest release</a>.<br>2. Extract it anywhere and run <b>Dih Karts.exe</b>. No installation needed.</p></figure>
+<section id="faq">
+  <h2>FAQ</h2>
+  <details><summary>Is this safe? Will I get banned?</summary><p>Dih Karts loads the real smashkarts.io and doesn't touch accounts, coins, gems or matchmaking. It changes how the game is displayed and how fast it runs. It is an unofficial client, so use it at your own discretion. The full source is on GitHub.</p></details>
+  <details><summary>Why does my FPS go above my monitor's refresh rate?</summary><p>Stock browsers sync to your monitor. Dih Karts turns that off, so the game renders as fast as your GPU allows. Use <kbd>F6</kbd> to cap it if you'd like less heat or screen tearing.</p></details>
+  <details><summary>The screen looks black when I record it.</summary><p>Leave the experimental low-latency canvas off (default). If you turned it on with <kbd>F9</kbd>, press <kbd>F9</kbd> again and restart.</p></details>
+  <details><summary>Windows says "unknown publisher".</summary><p>The app isn't code-signed. Check the SHA-256 against the one published in the release and in our Discord, or build it from source with <code>node tools/package.js</code>.</p></details>
+  <details><summary>Does it work on Mac or Linux?</summary><p>Only Windows x64 builds are published today. The source is cross-platform Electron; ask in the Discord if you want another platform.</p></details>
+  <details><summary>Is it affiliated with Tall Team?</summary><p>No. Dih Karts is an unofficial fan-made client. SmashKarts and its artwork belong to Tall Team Ltd.</p></details>
+</section>
 </main>
 
 <footer class="w">
-  Dev: ewwhardik (Dih Clients) · <a href="https://discord.gg/KkCjEdv9Jv">discord.gg/KkCjEdv9Jv</a><br>
+  <div class="cta">
+    <a class="btn sm dc" href="https://discord.gg/KkCjEdv9Jv">Discord</a>
+    <a class="btn sm" href="https://www.youtube.com/channel/UCliKSEDHMhVhwLikfAbY8YA/">YouTube</a>
+    <a class="btn sm ghost" href="https://github.com/ewwhardik/dih-karts">GitHub</a>
+  </div>
+  Dev: ewwhardik (Dih Clients)<br>
   Unofficial fan-made client. Not affiliated with or endorsed by Tall Team. SmashKarts and its artwork belong to Tall Team Ltd.
 </footer>
+
+<script>
+// before/after slider + tabs
+const cmp = document.getElementById("cmp"), sl = document.getElementById("slider");
+sl.addEventListener("input", () => cmp.style.setProperty("--p", sl.value + "%"));
+const SETS = { menu: ["before-menu.png", "after-menu.png"], match: ["before-match.png", "after-match.png"] };
+document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
+  document.getElementById("imgBefore").src = "assets/" + SETS[t.dataset.k][0]; document.getElementById("imgAfter").src = "assets/" + SETS[t.dataset.k][1];
+}));
+// intro sweep when the comparison first scrolls into view: starts on stock (shows the ad panel) then reveals Dih Karts
+new IntersectionObserver((es, o) => { if (!es[0].isIntersecting) return; o.disconnect(); let t0; const step = t => { t0 ??= t; const k = Math.min(1, (t - t0) / 1800), v = 96 - 46 * (1 - Math.pow(1 - k, 3)); sl.value = v; cmp.style.setProperty("--p", v + "%"); if (k < 1) requestAnimationFrame(step); }; if (!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(step); }, { threshold: 0.5 }).observe(cmp);
+// live version / size / direct link from the latest GitHub release (falls back to the static text above)
+fetch("https://api.github.com/repos/ewwhardik/dih-karts/releases/latest").then(r => r.ok ? r.json() : Promise.reject()).then(rel => {
+  const a = (rel.assets || []).find(x => /\.zip$/i.test(x.name)); if (!a) return;
+  document.getElementById("ver").textContent = rel.tag_name; document.getElementById("ver2").textContent = rel.tag_name;
+  document.getElementById("size").textContent = Math.round(a.size / 1e6) + " MB";
+  document.getElementById("dlBtn").href = a.browser_download_url; document.getElementById("dlBtn2").href = a.browser_download_url;
+  if (a.digest) document.getElementById("sha").textContent = "SHA-256: " + a.digest.replace(/^sha256:/, "");
+}).catch(() => {});
+</script>
 </body>
 </html>
