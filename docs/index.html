@@ -46,6 +46,7 @@ footer{margin:64px 0 40px;text-align:center;color:var(--mut);font-size:14px}a{co
   <h3 class="ct">The details</h3>
   <div class="pair">
     <figure><img src="assets/fps-before-after.png" alt="FPS before and after"><figcaption>FPS counter — capped at 60 vs uncapped.</figcaption></figure>
+    <figure><img src="assets/fullscreen.png" alt="Fullscreen"><figcaption>Fullscreen at 1920×1080: game fills the screen, bar pinned to the bottom, Dih Clients mark bottom-right.</figcaption></figure>
     <figure><img src="assets/logo-before-after.png" alt="Logo before and after"><figcaption>Logo — original vs Dih Karts, drawn by the game itself.</figcaption></figure>
   </div>
 
@@ -62,6 +63,9 @@ footer{margin:64px 0 40px;text-align:center;color:var(--mut);font-size:14px}a{co
     <div class="c"><h3>Low-latency canvas (experimental)</h3><p>Off by default. Press F9 and restart to make the game canvas is created desynchronized and on the high-performance GPU, skipping compositor queueing for snappier input. Screen-capture tools may show it black.</p></div>
     <div class="c"><h3>Fast launch</h3><p>The patched game build is cached on disk, so later launches skip the 50&nbsp;MB download and patching (engine ready in about 3&nbsp;s on our test PC).</p></div>
     <div class="c"><h3>Own icon &amp; identity</h3><p>Custom app icon, file properties and taskbar identity — it's its own app, not a browser tab.</p></div>
+    <div class="c"><h3>Proper fullscreen</h3><p>F11 or the bar button fills the whole screen with the bar pinned to the bottom — no blank strip, no letterboxing.</p></div>
+    <div class="c"><h3>Our branding</h3><p>The studio mark in the menu is replaced with the Dih Clients mark, and the YouTube button opens our channel.</p></div>
+    <div class="c"><h3>Smarter resource use</h3><p>Prefers the dedicated GPU on laptops, uses fewer browser processes, and drops to 30 FPS while the window is in the background.</p></div>
     <div class="c"><h3>Light</h3><p>Trimmed Electron build — about 112&nbsp;MB zipped, portable, no installer.</p></div>
     <div class="c"><h3>Community</h3><p>Every Discord button in the game points to the Dih Clients server.</p></div>
   </div>

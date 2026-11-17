@@ -1,10 +1,10 @@
-const { app, BrowserWindow, protocol, net, session } = require("electron");
+const { app, BrowserWindow, protocol, net, session, ipcMain } = require("electron");
 const fs = require("fs"), path = require("path"), crypto = require("crypto");
 const rpc = require("./rpc"), VERSION = require("./package.json").version, PATCH_REV = "r3"; // bump PATCH_REV when the framework/wasm patches change
 // --- performance: lift Chromium's 60fps/vsync cap, keep the GPU busy, never throttle ---
-for (const f of ["disable-frame-rate-limit", "disable-gpu-vsync", "ignore-gpu-blocklist", "enable-gpu-rasterization", "enable-zero-copy", "disable-renderer-backgrounding", "disable-background-timer-throttling", "disable-backgrounding-occluded-windows", "enable-quic", "disable-background-networking", "no-pings", "disable-ipc-flooding-protection", "disable-hang-monitor"]) app.commandLine.appendSwitch(f);
+for (const f of ["disable-frame-rate-limit", "disable-gpu-vsync", "ignore-gpu-blocklist", "enable-gpu-rasterization", "enable-zero-copy", "disable-renderer-backgrounding", "disable-background-timer-throttling", "disable-backgrounding-occluded-windows", "enable-quic", "disable-background-networking", "no-pings", "disable-ipc-flooding-protection", "disable-hang-monitor", "force_high_performance_gpu", "disable-site-isolation-trials"]) app.commandLine.appendSwitch(f);
 app.commandLine.appendSwitch("use-angle", "d3d11");
-app.commandLine.appendSwitch("disable-features", "CalculateNativeWinOcclusion,IntensiveWakeUpThrottling");
+app.commandLine.appendSwitch("disable-features", "CalculateNativeWinOcclusion,IntensiveWakeUpThrottling,IsolateOrigins,site-per-process");
 if (!app.requestSingleInstanceLock()) app.quit();
 
 // --- patch the Unity build in flight ---
@@ -80,6 +80,7 @@ app.whenReady().then(async () => {
   if (st.max) w.maximize(); if (st.full) w.setFullScreen(true);
   const save = () => { try { const b = w.getNormalBounds(); fs.writeFileSync(stateFile, JSON.stringify({ ...b, max: w.isMaximized(), full: w.isFullScreen() })); } catch {} };
   w.on("close", save);
+  ipcMain.on("dih:fs", () => w.setFullScreen(!w.isFullScreen())); // the bar's fullscreen button -> real window fullscreen (same as F11)
   w.on("page-title-updated", e => { e.preventDefault(); w.setTitle("Dih Karts"); });
   w.webContents.on("before-input-event", (e, i) => {
     if (i.type !== "keyDown") return;
@@ -92,5 +93,6 @@ app.whenReady().then(async () => {
     if (/^https:/.test(url)) require("electron").shell.openExternal(url); return { action: "deny" }; });
   await ses.clearStorageData({ storages: ["serviceworkers", "cachestorage"] });
   const presence = rpc.start(VERSION); app.on("before-quit", () => presence.stop());
+  if (process.env.DIH_TEST_FS) setTimeout(() => w.setFullScreen(true), +process.env.DIH_TEST_FS); // dev/test hook
   w.loadURL("https://smashkarts.io/");
 });

@@ -44,6 +44,9 @@
 - **Low-latency canvas (F9, experimental, off by default)** — WebGL context created `desynchronized` on the high-performance GPU for less compositor queueing.
 - **Fast launch** — the patched framework/wasm are cached on disk; warm launches reach engine-ready in ~3 s on the test PC (first launch also downloads the game and ad lists).
 - **Own identity** — custom icon, file properties and taskbar identity.
+- **Proper fullscreen** — F11 or the bar button fills the whole screen; the bar is pinned to the bottom (no blank strip).
+- **Our branding** — the "Tall Team" mark in the menu is replaced with a Dih Clients mark; the YouTube button opens https://www.youtube.com/channel/UCliKSEDHMhVhwLikfAbY8YA/ .
+- **Resource use** — prefers the dedicated GPU, fewer browser processes, 30 FPS cap while the window is in the background.
 - **Smaller** — trimmed Electron build (~112 MB zip), single-instance, no service worker serving stale builds.
 
 ## Hotkeys
